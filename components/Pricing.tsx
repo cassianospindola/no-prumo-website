@@ -8,7 +8,7 @@ export const Pricing: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-white mb-4">Investimento que se paga na primeira semana</h2>
-          <p className="text-slate-400">Mais barato que um contador, mais eficiente que um assistente.</p>
+          <p className="text-slate-400">Mais eficiente que fazer sozinho, muito mais barato que contratar um assistente..</p>
         </div>
 
         <div className="max-w-lg mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl transform hover:-translate-y-2 transition-transform duration-300">

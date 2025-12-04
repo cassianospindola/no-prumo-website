@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Logo } from './Logo';
-import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car } from 'lucide-react';
+import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car, Info, ArrowRight } from 'lucide-react';
 
 export const Features: React.FC = () => {
   return (
@@ -447,7 +447,7 @@ export const Features: React.FC = () => {
           </div>
         </div>
 
-        {/* Feature 6: Centralizador de Contas (Updated Light Theme) */}
+        {/* Feature 6: Centralizador de Contas (UPDATED: Light Theme, General Forecast, Reduced Accounts, Insights) */}
         <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
           <div className="lg:w-1/2">
              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold mb-4">
@@ -461,22 +461,35 @@ export const Features: React.FC = () => {
           </div>
           <div className="lg:w-1/2 flex justify-center">
              <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm text-gray-900">
-                {/* Header with Month Selector */}
-                <div className="flex items-center justify-between mb-8">
-                   <div className="flex items-center text-gray-500 text-sm font-medium cursor-pointer hover:text-gray-800 transition-colors">
+                
+                {/* Header with General Balance and Forecast */}
+                <div className="mb-6">
+                   <div className="flex items-center justify-between text-gray-500 text-sm font-medium cursor-pointer hover:text-gray-800 transition-colors mb-4">
                       <ChevronLeft size={16} />
                       <span className="mx-2 select-none">Outubro 2025</span>
                       <ChevronRight size={16} />
                    </div>
-                   <div className="text-right">
-                      <p className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Saldo Geral</p>
-                      <p className="text-xl font-extrabold text-gray-900 tracking-tight">R$ 5.350,00</p>
+                   
+                   <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                       <div className="flex justify-between items-end mb-2">
+                           <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Saldo Hoje</span>
+                           <span className="text-xl font-extrabold text-gray-900">R$ 3.550,00</span>
+                       </div>
+                       <div className="w-full h-px bg-gray-200 my-2"></div>
+                       <div className="flex justify-between items-end">
+                           <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Previsão (31/Out)</span>
+                           <div className="text-right">
+                               <span className="text-lg font-bold text-gray-700">R$ 2.750,00</span>
+                               <ArrowRight className="inline-block ml-1 text-gray-400 rotate-45 transform" size={14} />
+                           </div>
+                       </div>
                    </div>
                 </div>
 
-                <div className="space-y-4">
+                {/* Account List */}
+                <div className="space-y-3">
                    {/* Nubank */}
-                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
+                   <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 shadow-sm hover:border-purple-200 transition-colors">
                       <div className="flex items-center gap-3">
                          <div className="w-10 h-10 rounded-full bg-[#820AD1]/10 text-[#820AD1] flex items-center justify-center font-bold text-xs shrink-0">
                             Nu
@@ -484,45 +497,54 @@ export const Features: React.FC = () => {
                          <div>
                              <p className="font-bold text-gray-800 text-sm">Nubank PJ</p>
                              <p className="text-[10px] text-gray-500 flex items-center mt-0.5">
-                                Previsto: <span className="text-green-600 font-semibold ml-1">R$ 4.200</span>
+                                Previsto: <span className="text-green-600 font-bold ml-1">R$ 2.450</span>
                              </p>
                          </div>
                       </div>
                       <span className="font-bold text-gray-900 text-sm">R$ 3.200</span>
                    </div>
 
-                   {/* Itaú */}
-                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
-                      <div className="flex items-center gap-3">
-                         <div className="w-10 h-10 rounded-full bg-[#EC7000]/10 text-[#EC7000] flex items-center justify-center font-bold text-xs shrink-0">
-                            It
-                         </div>
-                         <div>
-                             <p className="font-bold text-gray-800 text-sm">Itaú Empresas</p>
-                             <p className="text-[10px] text-gray-500 flex items-center mt-0.5">
-                                Previsto: <span className="text-green-600 font-semibold ml-1">R$ 2.450</span>
-                             </p>
-                         </div>
-                      </div>
-                      <span className="font-bold text-gray-900 text-sm">R$ 1.800</span>
-                   </div>
-
-                   {/* Gaveta */}
-                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
-                      <div className="flex items-center gap-3">
+                   {/* Caixinha (Warning) */}
+                   <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-red-100 shadow-sm hover:border-red-200 transition-colors relative overflow-hidden">
+                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-400"></div>
+                      <div className="flex items-center gap-3 pl-2">
                          <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
                             <Wallet size={16} />
                          </div>
                          <div>
-                             <p className="font-bold text-gray-800 text-sm">Dinheiro em Caixa</p>
+                             <p className="font-bold text-gray-800 text-sm">Caixinha</p>
                              <p className="text-[10px] text-gray-500 flex items-center mt-0.5">
-                                Previsto: <span className="text-green-600 font-semibold ml-1">R$ 450</span>
+                                Previsto: <span className="text-red-600 font-bold ml-1">- R$ 450</span>
                              </p>
                          </div>
                       </div>
                       <span className="font-bold text-gray-900 text-sm">R$ 350</span>
                    </div>
                 </div>
+
+                {/* Easy Insights (Layperson Friendly) */}
+                <div className="mt-6 space-y-3">
+                    {/* Note 1: Unassigned Funds */}
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 flex gap-3 items-start">
+                        <Info size={16} className="text-blue-500 shrink-0 mt-0.5" />
+                        <div className="text-xs text-blue-800">
+                            <span className="font-bold block mb-1">Nota: Dinheiro "Solto"</span>
+                            Existem lançamentos previstos de <span className="font-bold">R$ 750,00</span> (receitas e despesas futuras) que ainda não foram atribuídos a nenhuma conta específica.
+                        </div>
+                    </div>
+
+                    {/* Note 2: Negative Balance Warning */}
+                    <div className="bg-orange-50 p-3 rounded-lg border border-orange-100 flex gap-3 items-start">
+                        <AlertTriangle size={16} className="text-orange-500 shrink-0 mt-0.5" />
+                        <div className="text-xs text-orange-800">
+                            <span className="font-bold block mb-1">Atenção no Caixinha</span>
+                            O saldo do caixinha vai ficar <span className="font-bold text-red-600">negativo</span> dia 20/Out.
+                            <br/>
+                            <span className="underline decoration-orange-300 mt-1 inline-block">Dica:</span> Faça uma transferência do Nubank ou pague as contas usando outro método.
+                        </div>
+                    </div>
+                </div>
+
              </div>
           </div>
         </div>
