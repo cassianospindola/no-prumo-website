@@ -64,13 +64,13 @@ export const Logo: React.FC<LogoProps> = ({
             className="drop-shadow-sm"
           />
 
-          {/* The Arrow Up - Represents Growth/Profit/Positivity */}
+          {/* The Arrow Up - Represents Growth/Profit/Success */}
           <path 
-            d="M16 16V26M16 16L11 21M16 16L21 21" 
+            d="M16 25V15M12 19L16 15L20 19" 
             stroke="white" 
-            strokeWidth="2.5" 
+            strokeWidth="2" 
             strokeLinecap="round" 
-            strokeLinejoin="round"
+            strokeLinejoin="round" 
           />
         </svg>
       </div>
