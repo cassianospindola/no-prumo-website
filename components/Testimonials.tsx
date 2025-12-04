@@ -23,7 +23,11 @@ export const Testimonials: React.FC = () => {
             </p>
             
             <div className="flex items-center border-t border-gray-100 pt-6">
-              <img src="https://picsum.photos/100/100?random=1" alt="João" className="w-14 h-14 rounded-full mr-4 object-cover ring-4 ring-gray-50" />
+              <img 
+                src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=150&h=150&q=80" 
+                alt="João Marcos" 
+                className="w-14 h-14 rounded-full mr-4 object-cover ring-4 ring-gray-50" 
+              />
               <div>
                 <h4 className="font-bold text-slate-900 text-lg">João Marcos</h4>
                 <p className="text-sm text-brand-600 font-medium">Dono da Barbearia Vintage</p>
@@ -42,7 +46,11 @@ export const Testimonials: React.FC = () => {
             </p>
             
             <div className="flex items-center border-t border-gray-100 pt-6">
-              <img src="https://picsum.photos/100/100?random=2" alt="Ana" className="w-14 h-14 rounded-full mr-4 object-cover ring-4 ring-gray-50" />
+              <img 
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80" 
+                alt="Ana Paula" 
+                className="w-14 h-14 rounded-full mr-4 object-cover ring-4 ring-gray-50" 
+              />
               <div>
                 <h4 className="font-bold text-slate-900 text-lg">Ana Paula</h4>
                 <p className="text-sm text-brand-600 font-medium">Esteticista e Empreendedora</p>
