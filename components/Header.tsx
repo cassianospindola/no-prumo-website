@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Logo } from './Logo';
 import { Button } from './Button';
@@ -123,8 +124,8 @@ export const Header: React.FC = () => {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        {/* Mobile Menu Button - Hidden as requested */}
+        <div className="md:hidden hidden">
             <Button variant="whatsapp" className="px-4 py-1.5 text-xs font-bold">
               Entrar
             </Button>
