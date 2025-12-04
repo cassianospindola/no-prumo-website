@@ -5,13 +5,13 @@ import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors,
 
 export const Features: React.FC = () => {
   return (
-    <section id="features" className="py-24 bg-gray-50 overflow-hidden scroll-mt-24">
+    <section id="features" className="py-16 lg:py-24 bg-gray-50 overflow-hidden scroll-mt-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Feature 1: Forecasting */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
-          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center lg:justify-end">
-             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md relative">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
+          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center lg:justify-end w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md relative mx-auto lg:mx-0">
                 <div className="flex justify-between items-center mb-6">
                    <div>
                       <h4 className="font-bold text-gray-900">Fluxo de Caixa</h4>
@@ -137,7 +137,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 2: Agenda */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
           <div className="lg:w-1/2">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold mb-4">
               Agenda Integrada
@@ -147,21 +147,21 @@ export const Features: React.FC = () => {
               Gerencie seus clientes no mesmo lugar. Finalizou o atendimento? O sistema já pergunta como foi o pagamento e lança no financeiro na hora. Tudo conectado.
             </p>
           </div>
-          <div className="lg:w-1/2 flex justify-center">
-             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-md">
-                <div className="flex justify-between items-center mb-4 pb-4 border-b">
+          <div className="lg:w-1/2 flex justify-center w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-md mx-auto lg:mx-0">
+                <div className="flex justify-between items-center mb-4 pb-4 border-b w-full">
                    <h4 className="font-bold text-gray-800">Agenda de Hoje</h4>
                    <CalendarCheck className="text-brand-500" />
                 </div>
-                <div className="space-y-3">
-                   <div className="flex items-center p-3 bg-gray-50 rounded border-l-4 border-green-500">
+                <div className="space-y-3 w-full">
+                   <div className="flex items-center p-3 bg-gray-50 rounded border-l-4 border-green-500 w-full">
                       <div className="flex-1">
                          <p className="font-bold text-gray-800">Corte + Barba</p>
                          <p className="text-sm text-gray-500">João Silva • 14:00</p>
                       </div>
                       <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-bold">Pago</span>
                    </div>
-                   <div className="flex items-center p-3 bg-white border border-gray-100 rounded shadow-sm opacity-50">
+                   <div className="flex items-center p-3 bg-white border border-gray-100 rounded shadow-sm opacity-50 w-full">
                       <div className="flex-1">
                          <p className="font-bold text-gray-800">Hidratação</p>
                          <p className="text-sm text-gray-500">Maria Oliveira • 15:30</p>
@@ -173,13 +173,13 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 3: Budget Management */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
-          <div className="lg:w-1/2 order-2 lg:order-1">
-             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-                <div className="grid sm:grid-cols-2 gap-6 items-center">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
+          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center lg:justify-end w-full">
+             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden w-full max-w-md mx-auto lg:mx-0">
+                <div className="flex flex-col gap-6">
                   
-                  {/* Left Side: The Control */}
-                  <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                  {/* Top: The Control */}
+                  <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 w-full">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-2">
                         <PieChart size={16} className="text-amber-500" />
@@ -200,11 +200,12 @@ export const Features: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right Side: The Alert */}
-                  <div className="relative">
-                    <div className="hidden sm:block absolute top-1/2 -left-4 w-4 h-[2px] border-t-2 border-dashed border-gray-300"></div>
+                  {/* Bottom: The Alert */}
+                  <div className="relative w-full">
+                    {/* Vertical Connector Line */}
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 border-l-2 border-dashed border-gray-300"></div>
                     
-                    <div className="bg-[#efeae2] p-3 rounded-lg border border-gray-200 shadow-inner">
+                    <div className="bg-[#efeae2] p-3 rounded-lg border border-gray-200 shadow-inner w-full">
                       <div className="bg-white rounded-lg p-2.5 shadow-sm text-xs border-l-4 border-amber-500 relative">
                         <div className="absolute top-3 -left-[5px] w-2 h-2 bg-amber-500 rotate-45"></div>
                         
@@ -266,7 +267,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 4: Fricção Zero (Updated with Card Style) */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
           <div className="lg:w-1/2 order-1 lg:order-1 flex justify-center lg:justify-start">
             <div className="max-w-md">
                 <div className="inline-flex items-center px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-bold mb-4">
@@ -278,10 +279,10 @@ export const Features: React.FC = () => {
                 </p>
             </div>
           </div>
-          <div className="lg:w-1/2 order-2 lg:order-2 flex justify-center">
-             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-md relative overflow-hidden group">
+          <div className="lg:w-1/2 order-2 lg:order-2 flex justify-center w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-md relative overflow-hidden group mx-auto lg:mx-0">
                  {/* Card Header */}
-                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100 relative z-10">
+                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100 relative z-10 w-full">
                     <h4 className="font-bold text-gray-800 flex items-center">
                         <ShieldCheck className="text-yellow-500 mr-2" size={20} />
                         Segurança de Dados
@@ -293,9 +294,9 @@ export const Features: React.FC = () => {
                  </div>
 
                  {/* Security Items */}
-                 <div className="space-y-4 relative z-10">
-                    <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-100 group-hover:border-yellow-200 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-yellow-500 mr-3">
+                 <div className="space-y-4 relative z-10 w-full">
+                    <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-100 group-hover:border-yellow-200 transition-colors w-full">
+                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-yellow-500 mr-3 shrink-0">
                             <KeyRound size={20} />
                         </div>
                         <div>
@@ -304,8 +305,8 @@ export const Features: React.FC = () => {
                         </div>
                     </div>
                     
-                    <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-100 group-hover:border-yellow-200 transition-colors delay-75">
-                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-blue-500 mr-3">
+                    <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-100 group-hover:border-yellow-200 transition-colors delay-75 w-full">
+                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-blue-500 mr-3 shrink-0">
                             <ShieldCheck size={20} />
                         </div>
                         <div>
@@ -322,9 +323,9 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 5: Visão Raio-X (Caixa vs Competência) - CUSTOM CHART */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
-          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center">
-             <div className="bg-white p-5 rounded-2xl shadow-lg border border-gray-100 w-full max-w-sm">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
+          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center lg:justify-end w-full">
+             <div className="bg-white p-5 rounded-2xl shadow-lg border border-gray-100 w-full max-w-md mx-auto lg:mx-0">
                 {/* Header */}
                 <div className="flex justify-between items-end mb-5 border-b border-gray-100 pb-3">
                     <div>
@@ -448,7 +449,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 6: Centralizador de Contas (UPDATED: Light Theme, General Forecast, Reduced Accounts, Insights) */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
           <div className="lg:w-1/2">
              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold mb-4">
                <Landmark size={14} className="mr-1.5" />
@@ -459,8 +460,8 @@ export const Features: React.FC = () => {
                Nubank, Itaú, Caixa Físico e Cartão de Crédito. Gerencie o saldo de todas as suas contas em um único painel unificado. Pare de pular de app em app.
             </p>
           </div>
-          <div className="lg:w-1/2 flex justify-center">
-             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm text-gray-900">
+          <div className="lg:w-1/2 flex justify-center w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md text-gray-900 mx-auto lg:mx-0">
                 
                 {/* Header with General Balance and Forecast */}
                 <div className="mb-6">
@@ -550,9 +551,9 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 7: Categorização via IA - Updated Chat */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-24">
-          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center">
-             <div className="bg-[#efeae2] p-4 rounded-2xl shadow-xl border border-gray-200 w-full max-w-sm relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
+          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center w-full">
+             <div className="bg-[#efeae2] p-4 rounded-2xl shadow-xl border border-gray-200 w-full max-w-md relative overflow-hidden mx-auto lg:mx-0">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-[0.08] bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] pointer-events-none h-full"></div>
 
@@ -580,7 +581,7 @@ export const Features: React.FC = () => {
                     </div>
 
                     {/* AI Response */}
-                    <div className="flex justify-start">
+                    <div className="flex justify-start w-full">
                         <div className="bg-white p-0 rounded-lg rounded-tl-none shadow-sm max-w-[90%] text-sm text-gray-800 overflow-hidden w-full">
                             <div className="p-3">
                                 <div className="flex items-center gap-2 mb-3 text-green-600 font-bold text-xs uppercase tracking-wide">
@@ -648,7 +649,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 8: Separação Pessoal vs. Empresa */}
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           <div className="lg:w-1/2">
              <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold mb-4">
                <Scale size={14} className="mr-1.5" />
@@ -659,8 +660,8 @@ export const Features: React.FC = () => {
                Pagar a conta de luz de casa com o dinheiro do caixa? Nunca mais. O sistema identifica e separa o que é Gasto Pessoal (Retirada) do que é Despesa da Empresa, revelando seu lucro real.
             </p>
           </div>
-          <div className="lg:w-1/2 flex justify-center">
-             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm">
+          <div className="lg:w-1/2 flex justify-center w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md mx-auto lg:mx-0">
                 <div className="flex justify-around mb-6 border-b border-gray-100 pb-4">
                    <div className="flex flex-col items-center opacity-40 hover:opacity-100 transition-opacity cursor-pointer">
                       <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 mb-2">

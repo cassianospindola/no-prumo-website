@@ -36,13 +36,13 @@ export const Hero: React.FC = () => {
         <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
           
           {/* Text Content */}
-          <div className="lg:col-span-7 text-center lg:text-left mb-16 lg:mb-0">
+          <div className="lg:col-span-7 text-center lg:text-left mb-10 lg:mb-0">
             <div className={`inline-flex items-center px-3 py-1 rounded-full border text-xs font-semibold uppercase tracking-wide mb-6 transition-colors duration-500 ${isWhatsApp ? 'bg-brand-800 border-brand-600 text-brand-500' : 'bg-[#24A1DE]/10 border-[#24A1DE]/30 text-[#24A1DE]'}`}>
               <Star size={12} className="mr-1 fill-current" />
               Gestão Financeira via IA
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight min-h-[160px] sm:min-h-[auto]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
               Transforme seu <span className={`transition-all duration-300 ${fade ? 'opacity-0' : 'opacity-100'} ${isWhatsApp ? 'text-green-400' : 'text-[#24A1DE]'}`}>{platform === 'whatsapp' ? 'WhatsApp' : 'Telegram'}</span> <br className="hidden lg:block" />
               <span className={`transition-all duration-500 ${isWhatsApp ? 'text-green-400' : 'text-[#24A1DE]'}`}>
                 no Diretor Financeiro
@@ -50,7 +50,7 @@ export const Hero: React.FC = () => {
               <br className="hidden lg:block" /> do seu negócio.
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 font-light">
+            <p className="text-lg sm:text-xl text-gray-400 mb-2.5 max-w-2xl mx-auto lg:mx-0 font-light">
               Abandone o caderninho e as planilhas chatas. Envie um áudio, agende clientes e controle seu lucro sem sair do chat. Inteligência Artificial que trabalha por você.
             </p>
             
