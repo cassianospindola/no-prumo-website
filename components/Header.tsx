@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
     const element = document.getElementById(id);
     if (element) {
       // Calculate offset for fixed header
-      const headerOffset = 80;
+      const headerOffset = 60;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
           {/* Dynamic Text */}
           <div className="font-mono font-bold text-lg sm:text-xl tracking-tight text-white min-w-[140px] sm:min-w-[180px] flex items-center">
             <span className="text-green-400">{text}</span>
-            <span className="text-green-400 animate-blink mx-[1px]">|</span>
+            <span className="text-green-400 animate-blink -ml-[3px] -mr-[4px]">|</span>
             <span className="text-white">.noprumo</span>
           </div>
         </div>

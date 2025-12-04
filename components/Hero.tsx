@@ -17,7 +17,7 @@ export const Hero: React.FC = () => {
         setFade(false); // Start fade in
       }, 300); // Wait for fade out to finish before changing text
 
-    }, 8000); // Change every 8 seconds
+    }, 5000); // Change every 5 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 font-light">
-              Abandone o caderninho e as planilhas chatas. Envie um áudio, agende clientes e controle seu lucro sem sair do chat. Inteligência Artificial que trabalha para você.
+              Abandone o caderninho e as planilhas chatas. Envie um áudio, agende clientes e controle seu lucro sem sair do chat. Inteligência Artificial que trabalha por você.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">

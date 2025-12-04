@@ -30,7 +30,7 @@ const App: React.FC = () => {
   const scrollToPricing = () => {
     const element = document.getElementById('pricing');
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 60;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
