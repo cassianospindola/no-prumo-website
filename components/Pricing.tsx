@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from './Button';
-import { Check, Sparkles, Image as ImageIcon, TrendingUp, Headphones, BrainCircuit } from 'lucide-react';
+import { Check, Sparkles, Image as ImageIcon, TrendingUp, Headphones, BrainCircuit, Users } from 'lucide-react';
 
 export const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
@@ -42,158 +42,175 @@ export const Pricing: React.FC = () => {
           </span>
         </div>
 
-        {/* Pricing Cards Grid */}
+        {/* Pricing Cards Grid - Adjusted for 2 Columns */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
           
           {/* PLANO INICIAL */}
           <div className="bg-slate-800 rounded-3xl overflow-hidden border border-slate-700 hover:border-slate-600 transition-all duration-300 flex flex-col h-full relative">
-            <div className="p-8 flex-grow flex flex-col">
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-white mb-2">Plano Inicial</h3>
-                <p className="text-sm text-slate-400">Para quem quer largar o caderninho hoje.</p>
+            <div className="p-6 flex-grow flex flex-col">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold text-white mb-2">Inicial</h3>
+                <p className="text-xs text-slate-400">Para organizar a casa e largar o caderno.</p>
               </div>
 
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-4xl font-extrabold text-white">
-                    R$ {billingCycle === 'annual' ? '28,00' : '40,00'}
+                  <span className="text-3xl font-extrabold text-white">
+                    R$ {billingCycle === 'annual' ? '28' : '40'}
                   </span>
-                  <span className="text-slate-500 ml-1">/mês</span>
+                  <span className="text-slate-500 ml-1 text-sm">/mês</span>
                 </div>
                 {billingCycle === 'annual' && (
-                  <p className="text-xs text-slate-500 mt-1">Cobrado R$ 336,00 anualmente</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Cobrado R$ 336 anualmente</p>
                 )}
               </div>
 
               <div className="w-full h-px bg-slate-700 mb-6"></div>
 
-              <ul className="space-y-4 mb-8 flex-1">
+              <ul className="space-y-3 mb-8 flex-1">
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">IA no WhatsApp (Texto e Áudio)</span>
+                  <span className="ml-3 text-white text-xs font-bold flex items-center">
+                    1 Usuário
+                  </span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">Categorização Automática</span>
+                  <span className="ml-3 text-slate-300 text-xs">IA no WhatsApp (Texto e Áudio)</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">Multi-Carteiras (Nubank, Caixa, etc)</span>
+                  <span className="ml-3 text-slate-300 text-xs">Categorização Automática</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">Separação PJ e PF</span>
+                  <span className="ml-3 text-slate-300 text-xs">Multi-Carteiras</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">Gestão de Orçamentos</span>
+                  <span className="ml-3 text-slate-300 text-xs">Separação PJ e PF</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-300 text-sm">Relatórios Mensais</span>
+                  <span className="ml-3 text-slate-300 text-xs">Gestão de Orçamentos</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-white" strokeWidth={3} />
+                  </div>
+                  <span className="ml-3 text-slate-300 text-xs">Relatórios Mensais</span>
                 </li>
               </ul>
 
-              <Button variant="secondary" fullWidth className="py-3 font-bold mt-auto">
+              <Button variant="secondary" fullWidth className="py-2.5 text-sm font-bold mt-auto">
                 Começar Inicial
               </Button>
             </div>
           </div>
 
           {/* PLANO PRO */}
-          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 relative flex flex-col h-full">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 relative flex flex-col h-full transform scale-105 z-10 lg:scale-100 lg:z-0 lg:border-brand-500 lg:shadow-xl">
             {/* Ribbon */}
             <div className="absolute top-0 right-0">
-              <div className="bg-brand-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl shadow-md flex items-center">
-                <Sparkles size={12} className="mr-1" />
-                Mais Vendido
+              <div className="bg-brand-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center">
+                <Sparkles size={10} className="mr-1" />
+                Popular
               </div>
             </div>
 
-            <div className="p-8 flex-grow flex flex-col">
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Plano Pro</h3>
-                <p className="text-sm text-slate-500">Gestão completa e inteligência para crescer.</p>
+            <div className="p-6 flex-grow flex flex-col">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Pro</h3>
+                <p className="text-xs text-slate-500">Gestão avançada para crescer com segurança.</p>
               </div>
 
               <div className="mb-6">
                 <div className="flex items-baseline">
                   <span className="text-4xl font-extrabold text-brand-600">
-                    R$ {billingCycle === 'annual' ? '49,00' : '71,00'}
+                    R$ {billingCycle === 'annual' ? '49' : '71'}
                   </span>
-                  <span className="text-slate-500 ml-1">/mês</span>
+                  <span className="text-slate-500 ml-1 text-sm">/mês</span>
                 </div>
                 {billingCycle === 'annual' && (
-                  <p className="text-xs text-gray-400 mt-1">Cobrado R$ 588,00 anualmente</p>
+                  <p className="text-[10px] text-gray-400 mt-1">Cobrado R$ 588 anualmente</p>
                 )}
               </div>
 
               <div className="w-full h-px bg-gray-100 mb-6"></div>
 
-              <ul className="space-y-4 mb-8 flex-1">
+              <ul className="space-y-3 mb-8 flex-1">
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-green-600" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-green-600" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-700 text-sm font-semibold">Tudo do Plano Inicial</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-brand-600" strokeWidth={3} />
-                  </div>
-                  <span className="ml-3 text-slate-700 text-sm font-medium flex items-center">
-                    Leitura de Imagens e PDF
-                    <ImageIcon size={14} className="ml-1.5 text-brand-500" />
+                  <span className="ml-3 text-slate-900 text-xs font-bold flex items-center">
+                    3 Usuários
+                    <Users size={12} className="ml-1.5 text-brand-500" />
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-brand-600" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-green-600" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-700 text-sm font-medium flex items-center">
-                    Forecasting (Previsão Futura)
-                    <TrendingUp size={14} className="ml-1.5 text-brand-500" />
+                  <span className="ml-3 text-slate-700 text-xs font-semibold">Tudo do Plano Inicial</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-brand-600" strokeWidth={3} />
+                  </div>
+                  <span className="ml-3 text-slate-700 text-xs font-medium flex items-center">
+                    Leitura de Imagens e PDF
+                    <ImageIcon size={12} className="ml-1.5 text-brand-500" />
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-brand-600" strokeWidth={3} />
+                  </div>
+                  <span className="ml-3 text-slate-700 text-xs font-medium flex items-center">
+                    Forecasting (Previsão)
+                    <TrendingUp size={12} className="ml-1.5 text-brand-500" />
                   </span>
                 </li>
                  <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-brand-600" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-brand-600" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-700 text-sm font-medium flex items-center">
+                  <span className="ml-3 text-slate-700 text-xs font-medium flex items-center">
                     Insights de Inteligência
-                    <BrainCircuit size={14} className="ml-1.5 text-brand-500" />
+                    <BrainCircuit size={12} className="ml-1.5 text-brand-500" />
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-brand-600" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-brand-600" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-700 text-sm font-medium">Agenda Integrada</span>
+                  <span className="ml-3 text-slate-700 text-xs font-medium">Agenda Integrada</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
-                    <Check size={12} className="text-brand-600" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-brand-100 flex items-center justify-center mt-0.5">
+                    <Check size={10} className="text-brand-600" strokeWidth={3} />
                   </div>
-                  <span className="ml-3 text-slate-700 text-sm font-medium flex items-center">
+                  <span className="ml-3 text-slate-700 text-xs font-medium flex items-center">
                     Suporte Prioritário
-                     <Headphones size={14} className="ml-1.5 text-brand-500" />
+                     <Headphones size={12} className="ml-1.5 text-brand-500" />
                   </span>
                 </li>
               </ul>
 
-              <Button fullWidth className="py-4 text-lg font-bold shadow-lg shadow-brand-500/30 mt-auto">
+              <Button fullWidth className="py-3 text-sm font-bold shadow-lg shadow-brand-500/30 mt-auto">
                 Garantir Plano Pro
               </Button>
             </div>
