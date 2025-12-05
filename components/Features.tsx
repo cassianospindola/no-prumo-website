@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Logo } from './Logo';
-import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car, Info, ArrowRight } from 'lucide-react';
+import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car, Info, ArrowRight, ScanLine, FileText, Receipt } from 'lucide-react';
 
 export const Features: React.FC = () => {
   return (
@@ -649,7 +649,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Feature 8: Separação Pessoal vs. Empresa */}
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
           <div className="lg:w-1/2">
              <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold mb-4">
                <Scale size={14} className="mr-1.5" />
@@ -691,6 +691,91 @@ export const Features: React.FC = () => {
                    </div>
                 </div>
              </div>
+          </div>
+        </div>
+
+        {/* Feature 9: Leitura de Comprovantes */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+          <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center lg:justify-end w-full">
+             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md mx-auto lg:mx-0 relative overflow-hidden">
+                {/* Scanner effect line */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)] z-20 animate-[scan_3s_ease-in-out_infinite]"></div>
+                
+                <style>{`
+                  @keyframes scan {
+                    0% { top: 0%; opacity: 0; }
+                    10% { opacity: 1; }
+                    90% { opacity: 1; }
+                    100% { top: 100%; opacity: 0; }
+                  }
+                `}</style>
+
+                <div className="flex items-start gap-4 mb-4 relative z-10">
+                   {/* Receipt simulation */}
+                   <div className="w-24 h-32 bg-gray-50 border border-gray-200 rounded shadow-sm flex flex-col items-center p-2 shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-gray-200 mb-2"></div>
+                      <div className="w-16 h-1 bg-gray-300 rounded mb-1"></div>
+                      <div className="w-12 h-1 bg-gray-200 rounded mb-3"></div>
+                      <div className="w-full space-y-1">
+                        <div className="w-full h-px bg-gray-200"></div>
+                        <div className="flex justify-between w-full mt-1">
+                           <div className="w-8 h-1 bg-gray-300 rounded"></div>
+                           <div className="w-4 h-1 bg-gray-300 rounded"></div>
+                        </div>
+                        <div className="flex justify-between w-full">
+                           <div className="w-6 h-1 bg-gray-300 rounded"></div>
+                           <div className="w-4 h-1 bg-gray-300 rounded"></div>
+                        </div>
+                      </div>
+                   </div>
+
+                   {/* Extracted Data */}
+                   <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-2 text-cyan-600 font-bold text-xs uppercase tracking-wide mb-1">
+                         <ScanLine size={14} />
+                         Dados Extraídos
+                      </div>
+                      
+                      <div className="bg-cyan-50 border border-cyan-100 rounded p-2 flex justify-between items-center">
+                         <div className="flex items-center gap-2">
+                            <Receipt size={14} className="text-cyan-500" />
+                            <span className="text-xs font-semibold text-gray-700">Valor Total</span>
+                         </div>
+                         <span className="text-xs font-bold text-gray-900">R$ 45,90</span>
+                      </div>
+
+                      <div className="bg-gray-50 border border-gray-100 rounded p-2 flex justify-between items-center">
+                         <div className="flex items-center gap-2">
+                            <FileText size={14} className="text-gray-400" />
+                            <span className="text-xs font-semibold text-gray-700">Data</span>
+                         </div>
+                         <span className="text-xs font-bold text-gray-900">12/10/2025</span>
+                      </div>
+
+                      <div className="bg-gray-50 border border-gray-100 rounded p-2 flex justify-between items-center">
+                         <div className="flex items-center gap-2">
+                            <Building2 size={14} className="text-gray-400" />
+                            <span className="text-xs font-semibold text-gray-700">Local</span>
+                         </div>
+                         <span className="text-xs font-bold text-gray-900">Restaurante Sabor</span>
+                      </div>
+                   </div>
+                </div>
+
+                <div className="bg-green-50 text-green-700 text-xs font-bold p-2 rounded text-center border border-green-100">
+                   Lançamento Automático Realizado!
+                </div>
+             </div>
+          </div>
+          <div className="lg:w-1/2 order-1 lg:order-2">
+             <div className="inline-flex items-center px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 text-xs font-bold mb-4">
+               <ScanLine size={14} className="mr-1.5" />
+               Leitura de Comprovantes
+            </div>
+            <h3 className="text-3xl font-bold text-slate-900 mb-4">Esqueça a digitação.</h3>
+            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+               Tirou foto, tá lançado. Envie fotos de notas fiscais, recibos ou PDFs. A IA lê os dados (CNPJ, Data, Valor) e lança para você em segundos.
+            </p>
           </div>
         </div>
 
