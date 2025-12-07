@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import { Check, Sparkles, Image as ImageIcon, TrendingUp, Headphones, BrainCircuit, Users } from 'lucide-react';
 
-export const Pricing: React.FC = () => {
+interface PricingProps {
+  onOpenModal: (plan: string) => void;
+}
+
+export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
 
   return (
@@ -42,7 +46,7 @@ export const Pricing: React.FC = () => {
           </span>
         </div>
 
-        {/* Pricing Cards Grid - Adjusted for 2 Columns */}
+        {/* Pricing Cards Grid */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
           
           {/* PLANO INICIAL */}
@@ -114,14 +118,19 @@ export const Pricing: React.FC = () => {
                 </li>
               </ul>
 
-              <Button variant="secondary" fullWidth className="py-2.5 text-sm font-bold mt-auto">
+              <Button 
+                variant="secondary" 
+                fullWidth 
+                className="py-2.5 text-sm font-bold mt-auto"
+                onClick={() => onOpenModal('Plano Inicial')}
+              >
                 Começar Inicial
               </Button>
             </div>
           </div>
 
           {/* PLANO PRO */}
-          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 relative flex flex-col h-full transform scale-105 z-10 lg:scale-100 lg:z-0 lg:border-brand-500 lg:shadow-xl">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 relative flex flex-col h-full z-10 lg:border-brand-500 lg:shadow-xl">
             {/* Ribbon */}
             <div className="absolute top-0 right-0">
               <div className="bg-brand-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center">
@@ -210,7 +219,11 @@ export const Pricing: React.FC = () => {
                 </li>
               </ul>
 
-              <Button fullWidth className="py-3 text-sm font-bold shadow-lg shadow-brand-500/30 mt-auto">
+              <Button 
+                fullWidth 
+                className="py-3 text-sm font-bold shadow-lg shadow-brand-500/30 mt-auto"
+                onClick={() => onOpenModal('Plano Pro')}
+              >
                 Garantir Plano Pro
               </Button>
             </div>

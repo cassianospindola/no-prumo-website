@@ -4,7 +4,11 @@ import { Button } from './Button';
 import { ChatSimulation } from './ChatSimulation';
 import { ArrowRight, Star } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onOpenModal: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
   const [platform, setPlatform] = useState<'whatsapp' | 'telegram'>('whatsapp');
   const [fade, setFade] = useState(false);
 
@@ -56,13 +60,21 @@ export const Hero: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Button 
+                onClick={onOpenModal}
                 variant={isWhatsApp ? 'whatsapp' : 'telegram'} 
                 className={`w-full sm:w-auto text-lg px-8 py-4 font-bold shadow-lg transition-all duration-500 group ${isWhatsApp ? 'shadow-green-900/20' : 'shadow-[#24A1DE]/20'}`}
               >
                 Quero Acesso Antecipado
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" className="w-full sm:w-auto text-lg px-8 py-4">
+              <Button 
+                variant="outline" 
+                className="w-full sm:w-auto text-lg px-8 py-4"
+                onClick={() => {
+                  const el = document.getElementById('how-it-works');
+                  if(el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Ver demonstração
               </Button>
             </div>
