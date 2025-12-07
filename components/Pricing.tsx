@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from './Button';
-import { Check, Sparkles, Image as ImageIcon, TrendingUp, Headphones, BrainCircuit, Users } from 'lucide-react';
+import { Check, Sparkles, Image as ImageIcon, TrendingUp, Headphones, BrainCircuit, Users, Lock } from 'lucide-react';
 
 interface PricingProps {
   onOpenModal: (plan: string) => void;
@@ -11,11 +11,24 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
 
   return (
-    <section id="pricing" className="py-20 bg-slate-900 scroll-mt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-white mb-4">Investimento que se paga na primeira semana</h2>
-          <p className="text-slate-400">Escolha o plano ideal para o momento do seu negócio.</p>
+    <section id="pricing" className="py-20 bg-slate-900 scroll-mt-24 relative overflow-hidden">
+      {/* Background Warning Watermark */}
+      <div className="absolute inset-0 pointer-events-none opacity-5">
+         <div className="absolute top-20 left-10 rotate-12 text-9xl font-black text-white">FUTURO</div>
+         <div className="absolute bottom-20 right-10 -rotate-12 text-9xl font-black text-white">PREÇOS</div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-slate-700">
+            <Lock size={12} />
+            Preços Pós-Lançamento (2025)
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-4">Investimento Futuro</h2>
+          <p className="text-slate-400 max-w-xl mx-auto">
+            Estes serão os valores praticados após o período Beta. <br/>
+            <span className="text-yellow-400 font-bold">Garanta sua oferta de fundador hoje para travar o valor promocional.</span>
+          </p>
         </div>
 
         {/* Toggle Switch */}
@@ -50,7 +63,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
           
           {/* PLANO INICIAL */}
-          <div className="bg-slate-800 rounded-3xl overflow-hidden border border-slate-700 hover:border-slate-600 transition-all duration-300 flex flex-col h-full relative">
+          <div className="bg-slate-800 rounded-3xl overflow-hidden border border-slate-700 hover:border-slate-600 transition-all duration-300 flex flex-col h-full relative opacity-80 hover:opacity-100">
             <div className="p-6 flex-grow flex flex-col">
               <div className="mb-4">
                 <h3 className="text-xl font-bold text-white mb-2">Inicial</h3>
@@ -124,18 +137,18 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
                 className="py-2.5 text-sm font-bold mt-auto"
                 onClick={() => onOpenModal('Plano Inicial')}
               >
-                Começar Inicial
+                Entrar na Lista
               </Button>
             </div>
           </div>
 
           {/* PLANO PRO */}
-          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 relative flex flex-col h-full z-10 lg:border-brand-500 lg:shadow-xl">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-600 relative flex flex-col h-full z-10 grayscale hover:grayscale-0 transition-all duration-500">
             {/* Ribbon */}
             <div className="absolute top-0 right-0">
-              <div className="bg-brand-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center">
+              <div className="bg-slate-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center">
                 <Sparkles size={10} className="mr-1" />
-                Popular
+                Futuro Padrão
               </div>
             </div>
 
@@ -147,7 +160,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
 
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-4xl font-extrabold text-brand-600">
+                  <span className="text-4xl font-extrabold text-slate-800">
                     R$ {billingCycle === 'annual' ? '49' : '71'}
                   </span>
                   <span className="text-slate-500 ml-1 text-sm">/mês</span>
@@ -221,10 +234,10 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
 
               <Button 
                 fullWidth 
-                className="py-3 text-sm font-bold shadow-lg shadow-brand-500/30 mt-auto"
+                className="py-3 text-sm font-bold shadow-lg mt-auto bg-slate-800 text-white hover:bg-slate-700"
                 onClick={() => onOpenModal('Plano Pro')}
               >
-                Garantir Plano Pro
+                Garantir Oferta Secreta
               </Button>
             </div>
           </div>
@@ -232,7 +245,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
         </div>
 
         <p className="text-center text-xs text-slate-500 mt-12">
-          7 dias de garantia incondicional em qualquer plano.
+          Preços de referência. Oferta de lançamento disponível apenas no cadastro.
         </p>
       </div>
     </section>

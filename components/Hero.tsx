@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { ChatSimulation } from './ChatSimulation';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, Users } from 'lucide-react';
 
 interface HeroProps {
   onOpenModal: () => void;
@@ -29,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
   const isWhatsApp = platform === 'whatsapp';
 
   return (
-    <section className="relative pt-24 pb-12 lg:pt-32 lg:pb-24 overflow-hidden bg-brand-900 transition-colors duration-700">
+    <section className="relative pt-32 pb-12 lg:pt-40 lg:pb-24 overflow-hidden bg-brand-900 transition-colors duration-700">
       {/* Abstract Background Shapes */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
          <div className={`absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full blur-[120px] opacity-50 transition-colors duration-1000 ${isWhatsApp ? 'bg-brand-800' : 'bg-[#1b4b66]'}`}></div>
@@ -64,7 +64,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
                 variant={isWhatsApp ? 'whatsapp' : 'telegram'} 
                 className={`w-full sm:w-auto text-lg px-8 py-4 font-bold shadow-lg transition-all duration-500 group ${isWhatsApp ? 'shadow-green-900/20' : 'shadow-[#24A1DE]/20'}`}
               >
-                Quero Acesso Antecipado
+                Garantir Oferta de Fundador
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
@@ -79,9 +79,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
               </Button>
             </div>
             
-            <p className="mt-6 text-sm text-gray-500">
-              * Vagas limitadas para a versão beta. Sem cartão de crédito necessário.
-            </p>
+            <div className="mt-6 flex items-center justify-center lg:justify-start gap-4">
+               <div className="flex -space-x-2">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-brand-900 bg-gray-200 overflow-hidden">
+                       <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+               </div>
+               <div className="text-left">
+                  <div className="flex items-center">
+                     {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-yellow-400 fill-current" />)}
+                  </div>
+                  <p className="text-xs text-gray-400"><strong className="text-white">+400</strong> empreendedores na lista</p>
+               </div>
+            </div>
           </div>
 
           {/* Visual Content (Mockup) */}

@@ -10,11 +10,15 @@ import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 import { LeadFormModal } from './components/LeadFormModal';
+import { TopBanner } from './components/TopBanner';
 
 const App: React.FC = () => {
   const [showStickyBtn, setShowStickyBtn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [planOfInterest, setPlanOfInterest] = useState('Geral');
+  
+  // Estado para controlar a visibilidade do banner de topo
+  const [isBannerOpen, setIsBannerOpen] = useState(true);
 
   const handleOpenModal = (plan: string = 'Geral') => {
     setPlanOfInterest(plan);
@@ -37,7 +41,11 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-      <Header />
+      {isBannerOpen && <TopBanner onClose={() => setIsBannerOpen(false)} />}
+      
+      {/* Header recebe o estado do banner para ajustar sua posição top */}
+      <Header isBannerOpen={isBannerOpen} />
+      
       <main className="flex-grow">
         {/* Passando a função de abrir modal para a Hero */}
         <Hero onOpenModal={() => handleOpenModal('Hero CTA')} />
@@ -61,7 +69,7 @@ const App: React.FC = () => {
           onClick={() => handleOpenModal('Sticky Mobile')}
           className="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-500 transition-colors flex items-center justify-center"
         >
-          Testar Agora
+          Garantir Oferta de Fundador
         </button>
       </div>
 
