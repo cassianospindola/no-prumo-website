@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gift, Gem, Star, Zap } from 'lucide-react';
+import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gift, Gem, Star, Zap, Clock } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
@@ -126,7 +126,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
       console.log('Modo Demo Ativado: Simulando envio...', { 
         ...formData, 
         offer: offerType,
-        finalPlan: offerType === 'founder' ? 'Membro Fundador (Lote 2 - 149)' : planOfInterest 
+        finalPlan: offerType === 'founder' ? 'Membro Fundador (Lote 1 - 99)' : planOfInterest 
       });
       setLoading(true);
       setTimeout(() => {
@@ -146,7 +146,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
 
     try {
       const finalPlanInterest = offerType === 'founder' 
-        ? 'Membro Fundador (Lote 2 - 149)' 
+        ? 'Membro Fundador (Lote 1 - 99)' 
         : planOfInterest;
 
       // Chama a Edge Function para validar captcha e salvar
@@ -204,10 +204,10 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
               <div className="absolute inset-0 bg-green-200 rounded-full animate-ping opacity-25"></div>
               <CheckCircle size={48} />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Sua Vaga está Reservada!</h3>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">Sua Vaga no Lote 1 está Reservada!</h3>
             <p className="text-slate-600 mb-8 max-w-xs mx-auto">
               Parabéns, <strong>{formData.name.split(' ')[0]}</strong>! <br/>
-              Você garantiu sua oportunidade no <strong>Lote 2</strong>. Em breve nossa equipe entrará em contato via WhatsApp para liberar seu acesso.
+              Você garantiu sua oportunidade no <strong>Lote 1 (R$ 99)</strong>. Em breve nossa equipe entrará em contato via WhatsApp para liberar seu acesso.
             </p>
             
             {offerType === 'founder' && (
@@ -216,8 +216,8 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                  <p className="font-bold flex items-center justify-center gap-2 mb-2 text-yellow-800 uppercase tracking-wide text-xs">
                    <Crown size={14} /> Status Confirmado
                  </p>
-                 <p className="font-medium text-lg">Membro Fundador (Lote 2)</p>
-                 <p className="text-yellow-700 mt-1 font-bold">R$ 149 (1º Ano) + Trava de Preço</p>
+                 <p className="font-medium text-lg">Membro Fundador (Lote 1)</p>
+                 <p className="text-yellow-700 mt-1 font-bold">R$ 99 (1º Ano) + Trava de Preço</p>
               </div>
             )}
             
@@ -240,7 +240,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                <div className="relative z-10">
                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-brand-200 text-[10px] font-bold uppercase tracking-wider mb-4 backdrop-blur-md">
                     <Sparkles size={12} className="text-yellow-400" />
-                    Convite Exclusivo Beta
+                    Oportunidade de Lançamento
                  </div>
                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-tight">
                    Pare de perder dinheiro <br/> com gestão amadora.
@@ -257,7 +257,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                  <div className="absolute top-0 right-0 z-10">
                     <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl shadow-sm uppercase tracking-wide flex items-center">
                        <Zap size={10} className="mr-1 fill-white" />
-                       82% OFF (1º Ano)
+                       88% OFF (R$ 753 DE DESCONTO)
                     </div>
                  </div>
 
@@ -281,18 +281,25 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                                 </span>
                                 <div className="flex items-center gap-2">
                                    <span className="text-xs text-gray-400 line-through font-medium">R$ 852</span>
-                                   <span className="text-xl font-black text-brand-600">R$ 149</span>
+                                   <span className="text-xl font-black text-brand-600">R$ 99</span>
                                 </div>
                              </div>
                              
+                             <div className="bg-yellow-100 border border-yellow-200 rounded px-2 py-1.5 inline-block mb-3">
+                                <p className="text-[11px] text-yellow-800 font-bold flex items-center">
+                                   <Clock size={10} className="mr-1" />
+                                   Lote 1: Valor válido apenas até 31/12/2025
+                                </p>
+                             </div>
+
                              <p className="text-xs text-gray-500 mb-3">
                                 Adesão promocional pelo <strong className="text-gray-800">1º Ano de Acesso Pro</strong>.
-                                <span className="block text-brand-600 font-bold mt-0.5">Renovação garantida por R$ 588/ano (Sem aumentos).</span>
+                                <span className="block text-brand-600 font-bold mt-0.5">Renovação garantida pelo mesmo valor (Sem aumentos).</span>
                              </p>
 
                              {/* Bonuses Stacking */}
                              <div className={`space-y-2 overflow-hidden transition-all duration-300 ${offerType === 'founder' ? 'max-h-40 opacity-100 mt-3 pt-3 border-t border-yellow-200/50' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-[10px] font-bold text-yellow-700 uppercase tracking-wide mb-1">Bônus Inclusos no Lote 2:</p>
+                                <p className="text-[10px] font-bold text-yellow-700 uppercase tracking-wide mb-1">Bônus Inclusos no Lote 1:</p>
                                 <ul className="space-y-1.5">
                                    <li className="flex items-center text-xs text-slate-700">
                                       <Gem size={12} className="text-purple-500 mr-2 shrink-0" />

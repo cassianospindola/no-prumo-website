@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertTriangle, X, Clock } from 'lucide-react';
 
 interface TopBannerProps {
   onClose: () => void;
@@ -8,7 +8,8 @@ interface TopBannerProps {
 
 export const TopBanner: React.FC<TopBannerProps> = ({ onClose }) => {
   const calculateTimeLeft = () => {
-    const targetDate = new Date('2026-05-31T23:59:59').getTime();
+    // Data de encerramento do Lote 1 conforme especificado
+    const targetDate = new Date('2025-12-31T23:59:59').getTime();
     const now = new Date().getTime();
     const difference = targetDate - now;
 
@@ -34,16 +35,19 @@ export const TopBanner: React.FC<TopBannerProps> = ({ onClose }) => {
   }, []);
 
   return (
-    <div className="bg-yellow-400 text-yellow-900 py-2 px-4 text-center text-xs sm:text-sm font-bold fixed top-0 left-0 right-0 z-[60] shadow-sm flex items-center justify-center gap-2">
-      <div className="flex items-center gap-1.5 animate-pulse">
+    <div className="bg-yellow-400 text-yellow-900 py-2.5 px-4 text-center text-xs sm:text-sm font-bold fixed top-0 left-0 right-0 z-[60] shadow-sm flex items-center justify-center gap-2">
+      <div className="flex items-center gap-1.5 animate-pulse shrink-0">
         <AlertTriangle size={14} fill="currentColor" className="text-yellow-700" />
-        <span className="uppercase tracking-wide hidden sm:inline">Lote 2: Encerra em</span>
-        <span className="uppercase tracking-wide sm:hidden">Lote 2:</span>
+        <span className="uppercase tracking-wide hidden sm:inline">Lote 1 (R$ 99): Acaba em</span>
+        <span className="uppercase tracking-wide sm:hidden">Lote 1:</span>
       </div>
-      <div className="bg-yellow-900/10 px-2 py-0.5 rounded text-yellow-900 font-mono tracking-tighter">
-        {timeLeft.days}d {timeLeft.hours.toString().padStart(2, '0')}h {timeLeft.minutes.toString().padStart(2, '0')}m {timeLeft.seconds.toString().padStart(2, '0')}s
+      
+      <div className="bg-yellow-900/10 px-2 py-0.5 rounded text-yellow-950 font-mono tracking-tighter flex items-center gap-1 min-w-[120px] justify-center">
+        <Clock size={12} className="opacity-50" />
+        {timeLeft.days}d {timeLeft.hours.toString().padStart(2, '0')}h {timeLeft.minutes.toString().padStart(2, '0')}m
       </div>
-      <span className="hidden md:inline">- Garanta status de Fundador.</span>
+      
+      <span className="hidden md:inline text-yellow-800/80 font-medium">- Garanta o menor preço da história.</span>
 
       {/* Close Button */}
       <button 

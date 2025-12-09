@@ -10,6 +10,22 @@ interface PricingProps {
 export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
 
+  // Preços dinâmicos baseados no Lote 1
+  // Anual: R$ 99,00 -> Mensal eq: R$ 8,25
+  // Mensal (Sem desconto): R$ 29,90
+  const prices = {
+      initial: {
+          monthly: 29,
+          annual_total: 99,
+          annual_monthly_eq: 8 // arredondado de 8.25
+      },
+      pro: {
+          monthly: 49,
+          annual_total: 149,
+          annual_monthly_eq: 12 // arredondado de 12.41
+      }
+  };
+
   return (
     <section id="pricing" className="py-20 bg-slate-900 scroll-mt-24 relative overflow-hidden">
       {/* Background Warning Watermark */}
@@ -22,12 +38,12 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-slate-700">
             <Lock size={12} />
-            Preços Pós-Lançamento (2025)
+            Lote 1: Preços de Lançamento
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4">Investimento Futuro</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Investimento Anual</h2>
           <p className="text-slate-400 max-w-xl mx-auto">
-            Estes serão os valores praticados após o período Beta. <br/>
-            <span className="text-yellow-400 font-bold">Garanta sua oferta de fundador hoje para travar o valor promocional.</span>
+            Aproveite o <strong className="text-yellow-400">Lote 1 (Vagas Limitadas)</strong>. <br/>
+            O valor subirá automaticamente assim que o cronograma virar.
           </p>
         </div>
 
@@ -54,7 +70,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
           >
             Anual
             <span className="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-green-500/20 animate-pulse">
-              -30% OFF
+              MELHOR OFERTA
             </span>
           </span>
         </div>
@@ -73,12 +89,12 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
               <div className="mb-6">
                 <div className="flex items-baseline">
                   <span className="text-3xl font-extrabold text-white">
-                    R$ {billingCycle === 'annual' ? '28' : '40'}
+                    R$ {billingCycle === 'annual' ? prices.initial.annual_monthly_eq : prices.initial.monthly}
                   </span>
                   <span className="text-slate-500 ml-1 text-sm">/mês</span>
                 </div>
                 {billingCycle === 'annual' && (
-                  <p className="text-[10px] text-slate-500 mt-1">Cobrado R$ 336 anualmente</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Cobrado R$ {prices.initial.annual_total} anualmente (Lote 1)</p>
                 )}
               </div>
 
@@ -143,12 +159,12 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
           </div>
 
           {/* PLANO PRO */}
-          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-600 relative flex flex-col h-full z-10 grayscale hover:grayscale-0 transition-all duration-500">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-yellow-500 relative flex flex-col h-full z-10 transition-all duration-500">
             {/* Ribbon */}
             <div className="absolute top-0 right-0">
-              <div className="bg-slate-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center">
+              <div className="bg-yellow-500 text-yellow-950 text-[10px] font-bold px-3 py-1 rounded-bl-lg shadow-md flex items-center uppercase tracking-wide">
                 <Sparkles size={10} className="mr-1" />
-                Futuro Padrão
+                Mais Vendido (Lote 1)
               </div>
             </div>
 
@@ -161,12 +177,14 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
               <div className="mb-6">
                 <div className="flex items-baseline">
                   <span className="text-4xl font-extrabold text-slate-800">
-                    R$ {billingCycle === 'annual' ? '49' : '71'}
+                    R$ {billingCycle === 'annual' ? prices.pro.annual_monthly_eq : prices.pro.monthly}
                   </span>
                   <span className="text-slate-500 ml-1 text-sm">/mês</span>
                 </div>
                 {billingCycle === 'annual' && (
-                  <p className="text-[10px] text-gray-400 mt-1">Cobrado R$ 588 anualmente</p>
+                  <p className="text-[10px] text-green-600 font-bold mt-1 bg-green-50 inline-block px-2 py-0.5 rounded">
+                     R$ {prices.pro.annual_total} à vista (Valor de Lote 1)
+                  </p>
                 )}
               </div>
 
@@ -234,10 +252,10 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
 
               <Button 
                 fullWidth 
-                className="py-3 text-sm font-bold shadow-lg mt-auto bg-slate-800 text-white hover:bg-slate-700"
-                onClick={() => onOpenModal('Plano Pro')}
+                className="py-3 text-sm font-bold shadow-lg mt-auto bg-slate-900 text-white hover:bg-slate-800"
+                onClick={() => onOpenModal('Plano Pro - Lote 1')}
               >
-                Garantir Oferta Secreta
+                Garantir Oferta de Fundador
               </Button>
             </div>
           </div>
@@ -245,7 +263,7 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
         </div>
 
         <p className="text-center text-xs text-slate-500 mt-12">
-          Preços de referência. Oferta de lançamento disponível apenas no cadastro.
+          * Valores referentes ao Lote 1. Sujeito a alteração sem aviso prévio.
         </p>
       </div>
     </section>
