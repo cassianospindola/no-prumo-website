@@ -257,7 +257,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                  <div className="absolute top-0 right-0 z-10">
                     <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl shadow-sm uppercase tracking-wide flex items-center">
                        <Zap size={10} className="mr-1 fill-white" />
-                       88% OFF (R$ 753 DE DESCONTO)
+                       88% OFF (R$ 741 DE DESCONTO)
                     </div>
                  </div>
 
@@ -280,7 +280,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                                    Membro Fundador
                                 </span>
                                 <div className="flex items-center gap-2">
-                                   <span className="text-xs text-gray-400 line-through font-medium">R$ 852</span>
+                                   <span className="text-xs text-gray-400 line-through font-medium">R$ 840</span>
                                    <span className="text-xl font-black text-brand-600">R$ 99</span>
                                 </div>
                              </div>
