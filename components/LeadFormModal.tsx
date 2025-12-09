@@ -126,7 +126,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
       console.log('Modo Demo Ativado: Simulando envio...', { 
         ...formData, 
         offer: offerType,
-        finalPlan: offerType === 'founder' ? 'Membro Fundador (1 Ano Promo + Trava)' : planOfInterest 
+        finalPlan: offerType === 'founder' ? 'Membro Fundador (Lote 2 - 149)' : planOfInterest 
       });
       setLoading(true);
       setTimeout(() => {
@@ -146,7 +146,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
 
     try {
       const finalPlanInterest = offerType === 'founder' 
-        ? 'Membro Fundador (1 Ano Promo + Trava)' 
+        ? 'Membro Fundador (Lote 2 - 149)' 
         : planOfInterest;
 
       // Chama a Edge Function para validar captcha e salvar
@@ -207,7 +207,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
             <h3 className="text-2xl font-bold text-slate-900 mb-2">Sua Vaga está Reservada!</h3>
             <p className="text-slate-600 mb-8 max-w-xs mx-auto">
               Parabéns, <strong>{formData.name.split(' ')[0]}</strong>! <br/>
-              Você garantiu sua prioridade na lista. Em breve nossa equipe entrará em contato via WhatsApp para liberar seu acesso.
+              Você garantiu sua oportunidade no <strong>Lote 2</strong>. Em breve nossa equipe entrará em contato via WhatsApp para liberar seu acesso.
             </p>
             
             {offerType === 'founder' && (
@@ -216,8 +216,8 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                  <p className="font-bold flex items-center justify-center gap-2 mb-2 text-yellow-800 uppercase tracking-wide text-xs">
                    <Crown size={14} /> Status Confirmado
                  </p>
-                 <p className="font-medium text-lg">Membro Fundador</p>
-                 <p className="text-yellow-700 mt-1 font-bold">R$ 99 (1º Ano) + Trava de Preço</p>
+                 <p className="font-medium text-lg">Membro Fundador (Lote 2)</p>
+                 <p className="text-yellow-700 mt-1 font-bold">R$ 149 (1º Ano) + Trava de Preço</p>
               </div>
             )}
             
@@ -257,7 +257,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                  <div className="absolute top-0 right-0 z-10">
                     <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl shadow-sm uppercase tracking-wide flex items-center">
                        <Zap size={10} className="mr-1 fill-white" />
-                       83% OFF (1º Ano)
+                       82% OFF (1º Ano)
                     </div>
                  </div>
 
@@ -280,8 +280,8 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                                    Membro Fundador
                                 </span>
                                 <div className="flex items-center gap-2">
-                                   <span className="text-xs text-gray-400 line-through font-medium">R$ 588</span>
-                                   <span className="text-xl font-black text-brand-600">R$ 99</span>
+                                   <span className="text-xs text-gray-400 line-through font-medium">R$ 852</span>
+                                   <span className="text-xl font-black text-brand-600">R$ 149</span>
                                 </div>
                              </div>
                              
@@ -292,7 +292,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
 
                              {/* Bonuses Stacking */}
                              <div className={`space-y-2 overflow-hidden transition-all duration-300 ${offerType === 'founder' ? 'max-h-40 opacity-100 mt-3 pt-3 border-t border-yellow-200/50' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-[10px] font-bold text-yellow-700 uppercase tracking-wide mb-1">Bônus Inclusos Agora:</p>
+                                <p className="text-[10px] font-bold text-yellow-700 uppercase tracking-wide mb-1">Bônus Inclusos no Lote 2:</p>
                                 <ul className="space-y-1.5">
                                    <li className="flex items-center text-xs text-slate-700">
                                       <Gem size={12} className="text-purple-500 mr-2 shrink-0" />

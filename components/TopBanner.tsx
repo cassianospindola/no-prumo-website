@@ -37,8 +37,8 @@ export const TopBanner: React.FC<TopBannerProps> = ({ onClose }) => {
     <div className="bg-yellow-400 text-yellow-900 py-2 px-4 text-center text-xs sm:text-sm font-bold fixed top-0 left-0 right-0 z-[60] shadow-sm flex items-center justify-center gap-2">
       <div className="flex items-center gap-1.5 animate-pulse">
         <AlertTriangle size={14} fill="currentColor" className="text-yellow-700" />
-        <span className="uppercase tracking-wide hidden sm:inline">Lote 1: Encerra em</span>
-        <span className="uppercase tracking-wide sm:hidden">Lote 1:</span>
+        <span className="uppercase tracking-wide hidden sm:inline">Lote 2: Encerra em</span>
+        <span className="uppercase tracking-wide sm:hidden">Lote 2:</span>
       </div>
       <div className="bg-yellow-900/10 px-2 py-0.5 rounded text-yellow-900 font-mono tracking-tighter">
         {timeLeft.days}d {timeLeft.hours.toString().padStart(2, '0')}h {timeLeft.minutes.toString().padStart(2, '0')}m {timeLeft.seconds.toString().padStart(2, '0')}s
