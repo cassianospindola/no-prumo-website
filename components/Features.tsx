@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Logo } from './Logo';
-import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car, Info, ArrowRight, ScanLine, FileText, Receipt } from 'lucide-react';
+import { Telescope, CalendarCheck, ShieldCheck, Target, AlertTriangle, Scissors, PieChart, TrendingUp, Glasses, Wallet, Landmark, CreditCard, Sparkles, Tags, Scale, Building2, User, ArrowRightLeft, CheckCheck, Lock, KeyRound, TrendingDown, ChevronLeft, ChevronRight, Car, Info, ArrowRight, ScanLine, FileText, Receipt, RefreshCw, Link, Check } from 'lucide-react';
 
 export const Features: React.FC = () => {
   return (
@@ -170,6 +170,94 @@ export const Features: React.FC = () => {
                 </div>
              </div>
           </div>
+        </div>
+
+        {/* Feature: Open Banking / Conexão Bancária */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 lg:mb-24">
+           <div className="lg:w-1/2 order-2 lg:order-1 flex justify-center w-full">
+              <div className="bg-slate-50 p-6 rounded-2xl shadow-xl border border-slate-200 w-full max-w-md mx-auto lg:mx-0 relative overflow-hidden">
+                 {/* Card Header */}
+                 <div className="flex justify-between items-center mb-6">
+                    <h4 className="font-bold text-slate-900 flex items-center">
+                       <Landmark className="mr-2 text-slate-600" size={20} />
+                       Contas Conectadas
+                    </h4>
+                    <div className="flex items-center text-[10px] text-green-600 font-bold bg-green-50 px-2 py-1 rounded border border-green-100">
+                       <ShieldCheck size={12} className="mr-1" />
+                       Ambiente Seguro
+                    </div>
+                 </div>
+
+                 {/* Banks List */}
+                 <div className="space-y-3 relative z-10">
+                    {/* Nu */}
+                    <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between group">
+                       <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-[#820AD1] text-white flex items-center justify-center font-bold text-xs">Nu</div>
+                          <div>
+                             <p className="text-sm font-bold text-slate-900">Nubank PJ</p>
+                             <p className="text-[10px] text-green-600 flex items-center">
+                                <RefreshCw size={10} className="mr-1 animate-spin" style={{ animationDuration: '3s' }} /> Sincronizando...
+                             </p>
+                          </div>
+                       </div>
+                       <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                    </div>
+
+                    {/* Inter */}
+                    <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                       <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-[#FF7A00] text-white flex items-center justify-center font-bold text-xs">In</div>
+                          <div>
+                             <p className="text-sm font-bold text-slate-900">Inter Empresas</p>
+                             <p className="text-[10px] text-slate-400 flex items-center">
+                                <Check size={10} className="mr-1" /> Atualizado há 5min
+                             </p>
+                          </div>
+                       </div>
+                       <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                    </div>
+
+                    {/* Itaú */}
+                    <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between opacity-60">
+                       <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-[#EC7000] text-white flex items-center justify-center font-bold text-xs">It</div>
+                          <div>
+                             <p className="text-sm font-bold text-slate-900">Itaú</p>
+                             <p className="text-[10px] text-slate-400">Desconectado</p>
+                          </div>
+                       </div>
+                       <button className="text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded hover:bg-brand-100 transition-colors">
+                          Conectar
+                       </button>
+                    </div>
+                 </div>
+
+                 {/* Magic Notification (STANDARDIZED STYLE) */}
+                 <div className="mt-6 bg-indigo-50 border border-indigo-100 rounded-xl p-3 flex items-start space-x-3 relative animate-in slide-in-from-bottom-2 duration-700">
+                    <div className="bg-white p-1.5 rounded-full shadow-sm text-indigo-600 shrink-0 mt-0.5">
+                       <Sparkles size={16} />
+                    </div>
+                    <div>
+                       <h5 className="text-xs font-bold text-indigo-800 mb-0.5 uppercase tracking-wide">Inteligência Artificial</h5>
+                       <p className="text-xs text-indigo-700 leading-snug">
+                          Encontrei <strong>3 gastos no Nubank</strong> que você esqueceu de lançar hoje. Já categorizei como "Alimentação". Posso confirmar?
+                       </p>
+                    </div>
+                 </div>
+
+              </div>
+           </div>
+           <div className="lg:w-1/2 order-1 lg:order-2">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold mb-4">
+                 <Link size={14} className="mr-1.5" />
+                 Open Banking Automático
+              </div>
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">Esqueceu de lançar? O banco avisa.</h3>
+              <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                 Conecte suas contas bancárias de forma 100% segura (Open Finance). O sistema varre seu extrato diariamente e a IA identifica qualquer gasto que você esqueceu de mandar no WhatsApp, garantindo que seu caixa bata até o último centavo.
+              </p>
+           </div>
         </div>
 
         {/* Feature 3: Budget Management */}

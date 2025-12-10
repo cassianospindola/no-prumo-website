@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from './Button';
-import { Check, Sparkles, TrendingUp, Headphones, Users, Lock, Crown, Zap, ArrowRight, ShieldCheck, FileText, PieChart, ScanLine, Wallet, Scale, Mic, Calendar, Lightbulb, Star } from 'lucide-react';
+import { Check, Sparkles, TrendingUp, Headphones, Users, Lock, Crown, Zap, ArrowRight, ShieldCheck, FileText, PieChart, ScanLine, Wallet, Scale, Mic, Calendar, Lightbulb, Star, Landmark } from 'lucide-react';
 
 interface PricingProps {
   onOpenModal: (plan: string) => void;
@@ -289,6 +289,10 @@ export const Pricing: React.FC<PricingProps> = ({ onOpenModal }) => {
                 <li className="flex items-start">
                   <Check size={16} className="text-green-500 mt-0.5 shrink-0" />
                   <span className="ml-3 text-slate-300 text-xs font-medium">Tudo do Plano Inicial</span>
+                </li>
+                 <li className="flex items-start">
+                  <Landmark size={16} className="text-green-500 mt-0.5 shrink-0" />
+                  <span className="ml-3 text-slate-300 text-xs font-medium">Conexão Bancária (Open Finance)</span>
                 </li>
                 <li className="flex items-start">
                   <ScanLine size={16} className="text-green-500 mt-0.5 shrink-0" />
