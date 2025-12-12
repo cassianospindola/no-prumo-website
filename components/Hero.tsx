@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { ChatSimulation } from './ChatSimulation';
@@ -91,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
                   <div className="flex items-center">
                      {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-yellow-400 fill-current" />)}
                   </div>
-                  <p className="text-xs text-gray-400"><strong className="text-white">+400</strong> empreendedores na lista</p>
+                  <p className="text-xs text-gray-400"><strong className="text-white">+100</strong> empreendedores na lista</p>
                </div>
             </div>
           </div>

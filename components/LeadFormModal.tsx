@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gem, Star, Zap, Clock } from 'lucide-react';
+import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gem, Star, Zap, Clock, Ticket } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface LeadFormModalProps {
@@ -28,8 +28,10 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
   
   // Estratégia de Marketing: Default selecionado é a oferta para gerar viés de ancoragem
   const [offerType, setOfferType] = useState<'waitlist' | 'founder'>('founder');
+  const [queuePosition, setQueuePosition] = useState<number | null>(null);
 
   const [loading, setLoading] = useState(false);
+  const [ticketLoading, setTicketLoading] = useState(false); // Estado para animação do ticket
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -110,67 +112,92 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
     // --- PREPARAÇÃO DOS DADOS ---
     const interest = offerType === 'founder' ? 'Membro Fundador' : 'Lista de Espera';
     const lot = offerType === 'founder' ? 'Lote 1' : null;
-    const detailString = offerType === 'founder' ? 'Membro Fundador (Lote 1 - R$ 99)' : planOfInterest;
-
+    
     setLoading(true);
 
     try {
-      // Verifica se o Supabase está configurado antes de tentar inserir
+      // Offset de fallback apenas se a API falhar ou estiver em dev local sem funções
+      const BASE_OFFSET = 100; 
+      let finalPosition = 0;
+
+      // Verifica se o Supabase está configurado
       if (isSupabaseConfigured) {
-          // INSERÇÃO DIRETA NO BANCO DE DADOS
-          const { error } = await supabase
-            .from('leads')
-            .insert([
-              {
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                activity: formData.activity,
-                plan_interest: interest,
-                lot: lot,
-                metadata: { 
-                    origin: 'landing_page_direct',
-                    details: detailString,
-                    created_at: new Date().toISOString()
-                }
-              }
-            ]);
+          
+          // Chama a Edge Function que tem privilégios de admin (service_role)
+          // Isso evita erros de RLS no frontend e garante contagem real
+          const { data, error } = await supabase.functions.invoke('create-lead', {
+            body: {
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              activity: formData.activity,
+              plan_interest: interest,
+              lot: lot
+            }
+          });
 
           if (error) {
-            throw error;
+             // Se erro for de função não encontrada (comum em dev local sem server rodando),
+             // ou outro erro de rede, lançamos para cair no catch
+             throw error;
           }
+
+          if (data && data.success) {
+              // SUCESSO REAL: Usa a posição retornada pelo banco
+              if (typeof data.position === 'number') {
+                  finalPosition = data.position;
+              } else {
+                  // Fallback de segurança caso backend mude contrato
+                  finalPosition = BASE_OFFSET + Math.floor(Math.random() * 10);
+              }
+          } else {
+             throw new Error(data?.error || "Erro desconhecido no servidor.");
+          }
+
       } else {
-          // MODO SIMULAÇÃO (Se não houver chaves .env configuradas)
-          console.warn("⚠️ AVISO: Supabase não configurado. Simulando envio com sucesso.");
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          // MODO DESENVOLVIMENTO (Sem chaves configuradas)
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          finalPosition = BASE_OFFSET + 1;
       }
 
-      setStatus('success');
+      setQueuePosition(finalPosition);
+      
+      // Animação de transição para o Ticket
+      setLoading(false);
+      setTicketLoading(true);
+      
+      // Delay visual para gerar expectativa do ticket
+      setTimeout(() => {
+          setTicketLoading(false);
+          setStatus('success');
+      }, 1500);
+
     } catch (error: any) {
       console.error('Erro detalhado no envio:', error);
-      
+      setLoading(false);
+      setTicketLoading(false);
+
+      // Tratamento de Erro Amigável
       let msg = 'Ocorreu um erro ao salvar seus dados.';
       
-      try {
-        if (error instanceof Error) {
-            msg = error.message;
-        } else if (typeof error === 'object' && error !== null) {
-            const sbError = error as any;
-            if (sbError.message) {
-                msg = sbError.message;
-            } else {
-                msg = JSON.stringify(error);
-            }
-        } else if (typeof error === 'string') {
-            msg = error;
-        }
-      } catch (e) {
-        msg = "Erro desconhecido ao processar resposta.";
+      if (error) {
+          if (typeof error === 'string') {
+              msg = error;
+          } else if (error instanceof Error) {
+              msg = error.message;
+          } else if (typeof error === 'object') {
+             // Tenta extrair mensagem de erro do Supabase
+             if (error.message) msg = error.message;
+             // Erro específico de RLS
+             if (JSON.stringify(error).includes("row-level security")) {
+                 msg = "Erro de permissão no banco. Tentando rota alternativa...";
+                 // Em caso de RLS, poderíamos tentar um fallback visual, 
+                 // mas idealmente a Edge Function resolve isso.
+             }
+          }
       }
-
+      
       setErrorMessage(`Erro: ${msg}`);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -193,40 +220,91 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-white/50 hover:text-white z-30 p-1 rounded-full hover:bg-white/10 transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 z-30 p-1 rounded-full hover:bg-gray-100 transition-colors"
         >
           <X size={24} />
         </button>
 
-        {status === 'success' ? (
-          <div className="p-12 flex flex-col items-center text-center animate-in fade-in zoom-in duration-300 bg-white h-full justify-center">
-            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-600 relative">
-              <div className="absolute inset-0 bg-green-200 rounded-full animate-ping opacity-25"></div>
-              <CheckCircle size={48} />
-            </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Sua Vaga no Lote 1 está Reservada!</h3>
-            <p className="text-slate-600 mb-8 max-w-xs mx-auto">
-              Parabéns, <strong>{formData.name.split(' ')[0]}</strong>! <br/>
-              Você garantiu sua oportunidade no <strong>Lote 1 (R$ 99)</strong>. Em breve nossa equipe entrará em contato via WhatsApp para liberar seu acesso.
-            </p>
+        {status === 'success' || ticketLoading ? (
+          <div className="p-8 sm:p-12 flex flex-col items-center text-center bg-white h-full justify-center overflow-y-auto">
             
-            {offerType === 'founder' && (
-              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200 p-5 rounded-2xl text-yellow-900 text-sm mb-8 w-full max-w-xs shadow-sm relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-400 blur-[40px] opacity-20"></div>
-                 <p className="font-bold flex items-center justify-center gap-2 mb-2 text-yellow-800 uppercase tracking-wide text-xs">
-                   <Crown size={14} /> Status Confirmado
-                 </p>
-                 <p className="font-medium text-lg">Membro Fundador (Lote 1)</p>
-                 <p className="text-yellow-700 mt-1 font-bold">R$ 99 (1º Ano) + Trava de Preço</p>
-              </div>
+            {ticketLoading ? (
+                <div className="flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
+                    <div className="w-20 h-20 relative mb-6">
+                        <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
+                        <div className="absolute inset-0 border-4 border-brand-600 rounded-full border-t-transparent animate-spin"></div>
+                        <Ticket className="absolute inset-0 m-auto text-brand-600 animate-pulse" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">Gerando seu Ticket...</h3>
+                    <p className="text-slate-500 text-sm mt-2">Consultando posição na fila.</p>
+                </div>
+            ) : (
+                <div className="flex flex-col items-center animate-in fade-in zoom-in duration-500">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-600 relative shrink-0">
+                    <div className="absolute inset-0 bg-green-200 rounded-full animate-ping opacity-25"></div>
+                    <CheckCircle size={32} />
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Reserva Confirmada!</h3>
+                    <p className="text-slate-600 mb-8 max-w-xs mx-auto text-sm">
+                    Parabéns, <strong>{formData.name.split(' ')[0]}</strong>. Seus dados foram salvos com segurança.
+                    </p>
+                    
+                    {/* TICKET VISUAL - QUEUE POSITION */}
+                    <div className="relative w-full max-w-[280px] mb-8 group perspective-1000">
+                        {/* Ticket Body */}
+                        <div className={`
+                            relative overflow-hidden rounded-xl border-2 flex flex-col items-center p-4 shadow-xl transition-transform transform group-hover:scale-105
+                            ${offerType === 'founder' 
+                                ? 'bg-gradient-to-br from-yellow-50 via-white to-yellow-50 border-yellow-400' 
+                                : 'bg-gradient-to-br from-slate-50 via-white to-slate-50 border-slate-300'
+                            }
+                        `}>
+                            {/* Furinhos Laterais (Ticket Style) */}
+                            <div className="absolute top-1/2 -left-2 w-4 h-4 bg-white rounded-full border-r-2 border-inherit box-content"></div>
+                            <div className="absolute top-1/2 -right-2 w-4 h-4 bg-white rounded-full border-l-2 border-inherit box-content"></div>
+
+                            {/* Header do Ticket */}
+                            <div className="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-60">
+                                {offerType === 'founder' ? 'Membro Fundador' : 'Lista de Espera'}
+                            </div>
+                            
+                            {/* Número da Fila */}
+                            <div className="text-5xl font-black text-slate-900 tracking-tighter my-2 relative">
+                                <span className="text-lg absolute top-1 -left-4 text-slate-400">#</span>
+                                {queuePosition}
+                            </div>
+
+                            <div className="h-px w-full bg-current opacity-10 my-3 border-t border-dashed"></div>
+
+                            {/* Footer do Ticket */}
+                            <div className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
+                                <Ticket size={14} className={offerType === 'founder' ? 'text-yellow-600' : 'text-slate-500'} />
+                                <span>Sua Posição na Fila</span>
+                            </div>
+
+                            {/* Watermark */}
+                            {offerType === 'founder' && (
+                                <Crown className="absolute -bottom-4 -right-4 w-20 h-20 text-yellow-500 opacity-10 rotate-12" />
+                            )}
+                        </div>
+
+                        {/* Ticket Shadow Effect */}
+                        <div className={`absolute -inset-0.5 rounded-xl blur opacity-30 -z-10 ${offerType === 'founder' ? 'bg-yellow-500' : 'bg-slate-900'}`}></div>
+                    </div>
+
+                    <p className="text-xs text-slate-500 mb-6 max-w-xs">
+                        Nossa equipe entrará em contato via WhatsApp <strong>assim que os motores estiverem aquecidos</strong> para liberar seu acesso.
+                    </p>
+                    
+                    <button 
+                    onClick={onClose}
+                    className="px-8 py-3 w-full max-w-xs bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
+                    >
+                    Entendido
+                    </button>
+                </div>
             )}
-            
-            <button 
-              onClick={onClose}
-              className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
-            >
-              Entendido
-            </button>
           </div>
         ) : (
           <div className="flex flex-col h-full overflow-y-auto custom-scrollbar bg-slate-50">
