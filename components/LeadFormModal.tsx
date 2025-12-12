@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gift, Gem, Star, Zap, Clock } from 'lucide-react';
+import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gem, Star, Zap, Clock } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
@@ -44,7 +43,10 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
 
   // Safe access to recaptcha key
   const recaptchaKey = (() => {
-    try { return (import.meta as any).env?.VITE_RECAPTCHA_SITE_KEY || ''; } catch { return ''; }
+    try { 
+      const key = (import.meta as any).env?.VITE_RECAPTCHA_SITE_KEY;
+      return key ? String(key).trim() : ''; 
+    } catch { return ''; }
   })();
 
   // Close dropdown when clicking outside
@@ -121,54 +123,85 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
       return;
     }
 
-    // --- MODO DEMO (Se não houver backend configurado) ---
-    if (!isSupabaseConfigured || !recaptchaKey) {
-      console.log('Modo Demo Ativado: Simulando envio...', { 
-        ...formData, 
-        offer: offerType,
-        finalPlan: offerType === 'founder' ? 'Membro Fundador (Lote 1 - 99)' : planOfInterest 
-      });
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setStatus('success');
-      }, 1500);
-      return;
-    }
-
-    // --- MODO REAL ---
-    if (!captchaToken) {
+    // --- CAPTCHA ---
+    if (recaptchaKey && !captchaToken) {
       setErrorMessage('Por favor, confirme que você não é um robô.');
       return;
     }
 
+    // --- CHECK CONFIG ---
+    if (!isSupabaseConfigured) {
+       setErrorMessage('Erro de configuração: Não foi possível conectar ao banco de dados. Verifique as variáveis de ambiente.');
+       return;
+    }
+
+    // --- PREPARAÇÃO DOS DADOS ---
+    const interest = offerType === 'founder' ? 'Membro Fundador' : 'Lista de Espera';
+    const lot = offerType === 'founder' ? 'Lote 1' : null;
+    const detailString = offerType === 'founder' ? 'Membro Fundador (Lote 1 - R$ 99)' : planOfInterest;
+
     setLoading(true);
 
     try {
-      const finalPlanInterest = offerType === 'founder' 
-        ? 'Membro Fundador (Lote 1 - 99)' 
-        : planOfInterest;
-
-      // Chama a Edge Function para validar captcha e salvar
-      const { data, error } = await supabase.functions.invoke('create-lead', {
-        body: {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          activity: formData.activity,
-          plan_interest: finalPlanInterest,
-          captchaToken
-        }
-      });
+      // INSERÇÃO DIRETA NO BANCO DE DADOS (PRODUÇÃO)
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            activity: formData.activity,
+            plan_interest: interest,
+            lot: lot,
+            metadata: { 
+                origin: 'landing_page_direct',
+                details: detailString,
+                created_at: new Date().toISOString(),
+                captcha_token: captchaToken ? 'provided' : 'missing' 
+            }
+          }
+        ]);
 
       if (error) {
-        throw new Error(error.message || 'Erro ao conectar com o servidor.');
+        throw error;
       }
 
       setStatus('success');
     } catch (error: any) {
-      console.error('Erro no envio:', error);
-      setErrorMessage('Ocorreu um erro ao enviar. Tente novamente mais tarde.');
+      console.error('Erro detalhado no envio:', error);
+      
+      let msg = 'Ocorreu um erro ao salvar seus dados.';
+      
+      try {
+        if (error instanceof Error) {
+            msg = error.message;
+        } else if (typeof error === 'object' && error !== null) {
+            // Tenta extrair propriedades comuns de erro do Supabase
+            const sbError = error as any;
+            if (sbError.message && typeof sbError.message === 'string') {
+                msg = sbError.message;
+            } else if (sbError.error_description) {
+                msg = sbError.error_description;
+            } else if (sbError.details) {
+                msg = sbError.details;
+            } else {
+                // Último recurso: stringify, mas garante que não quebre a UI
+                msg = JSON.stringify(error);
+            }
+        } else if (typeof error === 'string') {
+            msg = error;
+        }
+      } catch (e) {
+        msg = "Erro desconhecido ao processar resposta do servidor.";
+      }
+
+      // Segurança extra: se msg ainda for um objeto por algum motivo bizarro
+      if (typeof msg !== 'string') {
+         msg = "Erro interno no formulário.";
+      }
+
+      setErrorMessage(`Erro: ${msg}`);
     } finally {
       setLoading(false);
     }
@@ -449,9 +482,9 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                 </div>
 
                 {errorMessage && (
-                  <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-start gap-2 animate-in slide-in-from-top-1">
+                  <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-start gap-2 animate-in slide-in-from-top-1 break-words">
                     <AlertCircle size={16} className="mt-0.5 shrink-0" />
-                    <p className="font-medium">{errorMessage}</p>
+                    <p className="font-medium text-xs sm:text-sm">{errorMessage}</p>
                   </div>
                 )}
 
