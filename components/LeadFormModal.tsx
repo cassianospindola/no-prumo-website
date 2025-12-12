@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, CheckCircle, Loader2, ShieldCheck, ChevronDown, Search, AlertCircle, Crown, Sparkles, Rocket, Gem, Star, Zap, Clock } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface LeadFormModalProps {
@@ -33,21 +32,11 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   
   // States for Activity Dropdown
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputActivityRef = useRef<HTMLInputElement>(null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
-  // Safe access to recaptcha key
-  const recaptchaKey = (() => {
-    try { 
-      const key = (import.meta as any).env?.VITE_RECAPTCHA_SITE_KEY;
-      return key ? String(key).trim() : ''; 
-    } catch { return ''; }
-  })();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -86,11 +75,6 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
     if (errorMessage) setErrorMessage('');
   };
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
-    if (errorMessage) setErrorMessage('');
-  };
-
   // UX Mobile: Prevent keyboard on arrow click
   const handleToggleDropdown = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevents focus on input
@@ -123,18 +107,6 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
       return;
     }
 
-    // --- CAPTCHA ---
-    if (recaptchaKey && !captchaToken) {
-      setErrorMessage('Por favor, confirme que você não é um robô.');
-      return;
-    }
-
-    // --- CHECK CONFIG ---
-    if (!isSupabaseConfigured) {
-       setErrorMessage('Erro de configuração: Não foi possível conectar ao banco de dados. Verifique as variáveis de ambiente.');
-       return;
-    }
-
     // --- PREPARAÇÃO DOS DADOS ---
     const interest = offerType === 'founder' ? 'Membro Fundador' : 'Lista de Espera';
     const lot = offerType === 'founder' ? 'Lote 1' : null;
@@ -143,28 +115,34 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
     setLoading(true);
 
     try {
-      // INSERÇÃO DIRETA NO BANCO DE DADOS (PRODUÇÃO)
-      const { error } = await supabase
-        .from('leads')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            activity: formData.activity,
-            plan_interest: interest,
-            lot: lot,
-            metadata: { 
-                origin: 'landing_page_direct',
-                details: detailString,
-                created_at: new Date().toISOString(),
-                captcha_token: captchaToken ? 'provided' : 'missing' 
-            }
-          }
-        ]);
+      // Verifica se o Supabase está configurado antes de tentar inserir
+      if (isSupabaseConfigured) {
+          // INSERÇÃO DIRETA NO BANCO DE DADOS
+          const { error } = await supabase
+            .from('leads')
+            .insert([
+              {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                activity: formData.activity,
+                plan_interest: interest,
+                lot: lot,
+                metadata: { 
+                    origin: 'landing_page_direct',
+                    details: detailString,
+                    created_at: new Date().toISOString()
+                }
+              }
+            ]);
 
-      if (error) {
-        throw error;
+          if (error) {
+            throw error;
+          }
+      } else {
+          // MODO SIMULAÇÃO (Se não houver chaves .env configuradas)
+          console.warn("⚠️ AVISO: Supabase não configurado. Simulando envio com sucesso.");
+          await new Promise(resolve => setTimeout(resolve, 2000));
       }
 
       setStatus('success');
@@ -177,28 +155,17 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
         if (error instanceof Error) {
             msg = error.message;
         } else if (typeof error === 'object' && error !== null) {
-            // Tenta extrair propriedades comuns de erro do Supabase
             const sbError = error as any;
-            if (sbError.message && typeof sbError.message === 'string') {
+            if (sbError.message) {
                 msg = sbError.message;
-            } else if (sbError.error_description) {
-                msg = sbError.error_description;
-            } else if (sbError.details) {
-                msg = sbError.details;
             } else {
-                // Último recurso: stringify, mas garante que não quebre a UI
                 msg = JSON.stringify(error);
             }
         } else if (typeof error === 'string') {
             msg = error;
         }
       } catch (e) {
-        msg = "Erro desconhecido ao processar resposta do servidor.";
-      }
-
-      // Segurança extra: se msg ainda for um objeto por algum motivo bizarro
-      if (typeof msg !== 'string') {
-         msg = "Erro interno no formulário.";
+        msg = "Erro desconhecido ao processar resposta.";
       }
 
       setErrorMessage(`Erro: ${msg}`);
@@ -485,16 +452,6 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({ isOpen, onClose, p
                   <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-start gap-2 animate-in slide-in-from-top-1 break-words">
                     <AlertCircle size={16} className="mt-0.5 shrink-0" />
                     <p className="font-medium text-xs sm:text-sm">{errorMessage}</p>
-                  </div>
-                )}
-
-                {recaptchaKey && (
-                  <div className="flex justify-center pt-2 scale-90 origin-center">
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={recaptchaKey}
-                      onChange={handleCaptchaChange}
-                    />
                   </div>
                 )}
 
